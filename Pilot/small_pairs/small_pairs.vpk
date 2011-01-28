@@ -1,0 +1,5 @@
+| Bet Round | Action              | 
+| preflop   | small_pairs_preflop | 
+| flop      | small_pairs_flop    | 
+| turn      | small_pairs_turn    | 
+| river     | small_pairs_river   | 

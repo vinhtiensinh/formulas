@@ -1,0 +1,12 @@
+@set   [
+  Board: 1 card straight, 1 card flush            [ call bet                    ]
+  Board: no possible straight & no possible flush [ bet                         ]
+  Board: possible straight , possible flush       [ bet first, call any         ]
+]
+@trip  [
+  Board: no possible straight & no possible flush [
+    Hand: kicker >= J [ bet until raise, call any ]
+    [ bet until raise ]
+  ]
+  [ bet first, call bet ]
+]

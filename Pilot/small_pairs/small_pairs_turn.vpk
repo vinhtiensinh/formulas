@@ -1,0 +1,13 @@
+Hand : straight flush, quad, fullhouse [ slow play on turn ]
+Hand: set [ turn.set ]
+Board: suited [ check fold ]
+Hand: straight & not bottom straight [
+  Board: possible flush [ bet first, call bet ]
+  [ bet until raise, call any ]
+]
+Hand: open ended straight draw [
+  Board: 3 cards connected & >= 3 over card [ check fold ]
+  [ call bet ]
+]
+Hand: top pair [ others_turn.top pair ]
+Hand: second pair [others_turn.second pair]

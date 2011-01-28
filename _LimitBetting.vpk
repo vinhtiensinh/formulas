@@ -1,0 +1,97 @@
+@check call [
+  | Betting | Action | 
+  | bet     | call   | 
+]
+@check fold [
+  | Betting | Action | 
+  | nobet   | check  | 
+  | bet     | fold   | 
+]
+@check raise [
+  | Betting | Action | 
+  | nobet   | check  | 
+  |         | bet    | 
+]
+@limp [
+  | Betting | Action |
+  | nobet   | call   |
+]
+@call bet [
+  | Betting | Action | 
+  | bet     | call   | 
+]
+@call any [ call ]
+@call reraise behind [
+  | Betting                      | Action |
+  | autoplayer raised & reraised | call   |
+]
+@call raise behind [
+  | Betting                 | Action |
+  | autoplayer bet & raised | call   |
+]
+@call bet from middle position [
+  Betting: bet from middle [ call ]
+]
+@call bet from late position [
+  Betting: bet from late [ call ]
+]
+@call bet behind [
+  | Action Round | Betting | Action |
+  | > 1          | bet     | call   |
+]
+@call raise [
+  | Betting | Action |
+  | raised  | call   |
+]
+@call bet and raise [
+  | Betting     | Action |
+  | bet, raised | call   |
+]
+@bet first [
+  | Betting | Action | 
+  | nobet   | bet    | 
+]
+@call reraise [
+  | Betting  | Action |
+  | reraised | call   |
+]
+@bet until raise [
+  | Betting    | Action | 
+  | nobet, bet | bet    | 
+  | raised     | call   | 
+]
+@bet until reraise [
+  | Betting            | Action | 
+  | nobet, bet, raised | bet    | 
+  | reraised           | call   | 
+]
+@raise bet [
+  | Betting | Action |
+  | bet     | bet    |
+]
+@raise continue bet [
+  | Betting      | Action |
+  | continue bet | bet    |
+]
+@slow play on flop [
+  | Betting               | Player              | Action | 
+  | nobet                 | players remain <= 3 | bet    | 
+  | nobet                 | players behind >= 2 | check  | 
+  | bet, raised, reraised |                     | call   | 
+]
+@slow play on turn [
+  | Action Round | Flop Betting      | Betting               | Action | 
+  | 1            | any bettor behind | nobet                 | check  | 
+  | 1            | any bettor behind | bet, raised, reraised | call   | 
+  |              |                   |                       | bet    | 
+]
+
+@call bet or open [
+  bet first, call bet,
+  call raise behind
+]
+
+@fold bet or open [
+  bet first,
+  call raise behind
+]

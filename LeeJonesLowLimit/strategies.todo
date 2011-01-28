@@ -1,0 +1,57 @@
+Pilot
+-----
+
+
+Fixes:
+
+DONE 1.  KK flop KQJ should bet, should do this for all pairs
+DONE 2.  TJ suited should limp on small blind, should do this for all JQ, and other suited connector where it make sense
+DONE 3. bet preflop, river low 1 straight card, check all the way should bet first, and call bet with anything > second pair
+DONE 4. AX should bet on late position if everyone else fold and call raise
+DONE 5. play second pair
+
+UNSURE 6. Big blind should call one bet if it is in the cut off position.
+DONE 7. QT, etc, other play, hit top pair on flop - should bet if has top pair, if there is nobet preflop and call bet if there is.
+
+UNSURE 8. other play, any hand that is about to raise, should not raise if we're on big blind position and there is limper from early position.
+DONE 9. small pair when the flop is over cards, should not bet unless it is head up and it is in late position.
+11. AJ suited (and other similar play) if has limp/call should continue to call a raise after that.
+12. AJ nobet preflop, top pair flop bet - oponent call, turn should continue to bet / and prepare to call one raise
+DONE 13. JJ, KK (or any over pair), oponent bet, autoplayer raise, opponent reraise, call. On Turn, should at least call one bet (and so is river). board can pair small card, doesnt matter.
+DONE 14. If we have top pair all the way until the river (river over card), should at least call one bet.
+DONE 15. AK on dealer, flop noone bet -> should continue bet.
+
+DONE 16. If we have top pair with a decent kicker, on river, last position with not so dangerous board <- should bet
+  Should we only bet if we have lead all the way?
+
+TEST 17. small pair should not call if there is a raise. odd to hit trip is 11% and that mean if we call a raise we need to potentially
+  win $2 which is very hard. given that.
+    1. if there are 2 callers which means there are 0.75c in play then we can play (because big blind and small will likely to call which will justify our call. also good potential post flop play)
+    2. if there is no bet then we can call. this means should only call if we're on middle to late position.
+      call middle if there are 2 or more caller infronts. if we can call with 0.1 then we need to only win $1 to justify the call.
+    1. This need new condition pot odd condition which is a bit of work so skip to next one
+
+DONE 18. Hand 25 board 1234Q <- river check fold for some reason ???
+
+DONE 19. Second pair should not bet if users >= 4. (Or better should only start betting from the turn ??) or last position on flop with good kicker.
+
+NOTEST 20.J9 all fold (just sb and bb now) <- fold ??? should've play with some decent hand when there is only sb and bb, similar to bb
+   if sb bet <- should call.
+
+DONE 21. Second pair with only 2 players <- should bet
+
+DONE 22. Over pairs should call raise even if there 3 cards >= 9, slow down though.
+
+DONE 23. AK headup flop TQQ should definately continue betting on flop if on last position (a bet is just 0.1 and we know where others hand is)
+
+TEST 24. AXs with 1 bet from middle position and all fold should not call, just not worth it. (with X <= 9). however should call if on big blind.
+
+TEST 25. AT big blind should not fold one bet from middle position.
+
+UNSURE 26. 1 bet from early position and one call, 89 suited should not call, just not worth it. call 20 to win 55 at this moment which is not value.
+
+TEST 27. KQs preflop 1 bettor and 1 caller. flop A Q 7, second pair is no good here, should not call bet.
+
+TEST 28. A7 all fold, on dealer, should bet
+TEST 29. AJ bet from middle position and we're in late position, should call.
+TEST 30. 8899 open should not continue bet on flop when there is 4 players and not in late position.

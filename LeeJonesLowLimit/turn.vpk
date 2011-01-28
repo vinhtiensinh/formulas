@@ -1,0 +1,181 @@
+Hole Cards: AA [
+  ~straight flush  :start betting or check raise,
+  ~quad            :start betting or check raise,
+  ~fullhouse       :start betting or check raise,
+  ~set             :play fast if safe ortherwise draw fullhouse,
+  ~1 card flush    :only play nut flush,
+  ~1 card straight :only play nut straight,
+  ~board two pairs :check fold,
+  ~big over pair
+]
+Hole Cards: KK [
+  ~straight flush  :start betting or check raise,
+  ~quad            :start betting or check raise,
+  ~fullhouse       :start betting or check raise,
+  ~set             :play fast if safe ortherwise draw fullhouse,
+  ~1 card flush    :play nut flush - bet first or slow down,
+  ~1 card straight :only play nut straight,
+  ~board two pairs :check fold,
+  ~big over pair,
+  ~big pair 1 over card
+]
+Hole Cards: QQ [
+  ~straight flush  :start betting or check raise,
+  ~quad            :start betting or check raise,
+  ~fullhouse       :start betting or check raise,
+  ~set             :play fast if safe ortherwise draw fullhouse,
+  ~1 card flush :play nut flush or call bet <= 3 players,
+  ~1 card straight :only play nut straight,
+  ~board two pairs :check fold,
+  ~big over pair,
+  ~big pair 1 over card
+]
+
+Hole Cards: JJ [
+  ~straight flush  :start betting or check raise,
+  ~quad            :start betting or check raise,
+  ~fullhouse       :start betting or check raise,
+  ~set             :play fast if safe ortherwise draw fullhouse,
+  ~1 card flush :play nut flush or call bet <= 2 players,
+  ~1 card straight :only play nut straight,
+  ~board two pairs :check fold,
+  ~big over pair,
+  ~big pair 1 over card
+]
+
+Hole Cards: pair [
+  ~straight flush  :start betting or check raise,
+  ~quad            :start betting or check raise,
+  ~fullhouse       :start betting or check raise,
+  ~set             :play fast if safe ortherwise draw fullhouse,
+  ~1 card flush    :check fold,
+  ~1 card straight :only play nut straight,
+  ~board two pairs :check fold,
+  ~big over pair,
+  ~big pair 1 over card
+]
+
+# -----------------------------------------------------------------------------
+@1 card flush :only play nut flush
+Board: 1 card flush [
+  Hand: flush [~nut flush]
+]
+
+@1 card flush :play nut flush - bet first or slow down
+Board: 1 card flush [
+  Hand: flush [~nut flush, call bet or open]
+]
+
+@1 card flush :play nut flush or call bet <= 3 players
+Board: 1 card flush [
+  Hand: nut flush [~nut flush]
+  Hand: flush | Player: <= 3 [call bet]
+]
+
+@1 card flush :play nut flush or call bet <= 2 players
+Board: 1 card flush [
+  Hand: nut flush [~nut flush]
+  Hand: flush | Player: 2 [call bet]
+]
+@1 card flush :check fold
+Board: 1 card flush [check fold]
+
+@1 card straight :only play nut straight
+Board: 1 card straight [
+  Hand: straight [~nut straight]
+]
+
+@board two pairs :check fold
+Board: two pairs [check fold]
+
+@straight flush :start betting or check raise
+Hand: straight flush [~start betting or check raise]
+
+@quad :start betting or check raise
+Hand: quad [~start betting or check raise]
+
+@fullhouse :start betting or check raise
+Hand: fullhouse [~start betting or check raise]
+
+@1 card flush
+Board: suited [
+  Hand: flush >= K   [~flush   ]
+  Hand: flush Q high [bet first]
+]
+
+@flush
+Hand: flush [
+  Hand: nut flush [~start betting or check raise]
+  [bet]
+]
+
+@nut flush
+Hand: nut flush [~start betting or check raise]
+
+@1 card straight
+Board: 1 card straight [
+  Hand: straight [~straight]
+]
+
+@straight
+Hand: straight [
+  Board: 3 cards suited [bet first, call bet and raise]
+  Board: pair [bet until raise, call reraise behind]
+  [bet]
+]
+
+# if the straight is nuts go full speed
+# if there is a possible flush or a pair slow down a bit
+@nut straight
+Hand: straight [
+  Board: 3 cards suited [bet first, call bet and raise]
+  Board: pair [bet until raise, call reraise behind]
+  [bet]
+]
+
+# if safe go full speed otherwise slow down a bit,
+# trying to catch a fullhouse incase someone has hit straight or flush
+@set :play fast if safe ortherwise draw fullhouse
+Hand: set [
+  Board: 1 card straight, 1 card flush            [call bet and raise       ]
+  Board: no possible straight & no possible flush [bet                      ]
+  Board: possible flush                           [bet first, call any      ]
+  Board: possible straight                        [bet until raise, call any]
+]
+
+@trip
+Hand: set [
+  Board: no possible straight & no possible flush [
+    Hand: kicker >= J [ bet until raise, call any ]
+    [ bet until raise ]
+  ]
+  [ bet first, call bet ]
+]
+
+# - if also drawing flush or straight, should call any
+#   just in case some one already hit flush.
+# - call if there is any pair on board.
+# - continue betting if lead previous round.
+# - otherwise call bet and raise
+@big over pair
+Hand: over pair [
+  Hand: flush draw, straight draw [bet first, call any]
+  Board: pair [bet first, call bet]
+  [bet until raise]
+]
+
+# - hang on if there is back end draw otherwise
+# - only hang on if players <= 3
+@big pair 1 over card [
+  Hand: nut flush draw, straight draw [call any]
+  Board: pair [check fold]
+  Player: <= 3 [call bet]
+]
+
+# If there is no bet on the flop or auto player lead on the flop
+# should continue to bet because if not we're possibly giving free card
+# if there is a bettor preflop then check raise him.
+@start betting or check raise [
+  Flop Betting: autoplayer lead, nobet [bet]
+  [check raise]
+]

@@ -1,0 +1,25 @@
+Hand : straight flush, quad, fullhouse [ bet ]
+Board: 2 pairs, set [ check fold ]
+Board: 1 card flush [ check fold ]
+Hand: flush [
+  Board: pair [ bet until raise, call any ]
+  [ bet ]
+]
+Board: 1 card straight [ river.1 card straight ]
+Hand: straight [
+  Board: possible flush [ bet first, call bet, call raise behind ]
+  Board: pair [ bet until raise, call any ]
+  [ bet ]
+]
+Hand: set [ river.trip ]
+Board: pair   [ check fold ]
+Hand: 2 pairs [
+  Board: possible flush [ call bet ]
+  Board: possible straight [ bet first, call bet and raise ]
+  [ bet until raise, call any ]
+]
+Hand: top pair [ river.top pair ]
+@second pair [
+  | Hand                      | Turn Betting           | Action   |
+  | second pair & kicker >= J | nobet, autoplayer lead | call bet |
+]

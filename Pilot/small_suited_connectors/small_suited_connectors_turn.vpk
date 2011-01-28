@@ -1,0 +1,33 @@
+Hand : straight flush, quad, fullhouse [ slow play on turn ]
+Hand: set [ turn.trip ]
+Board: 2 pairs , set[ check fold ]
+Board: 1 card flush [ check fold ]
+Hand: flush [ bet ]
+Board: 1 card straight [
+  Hand: straight & not bottom straight [
+    Board: possible flush [ bet first, call bet ]
+    [ bet ]
+  ]
+]
+Hand: straight [
+  Board: possible flush [ bet first, call bet and raise ]
+  [ bet ]
+]
+Hand: open ended straight draw [
+  Board: 3 cards connected & >= 3 over card [ check fold ]
+  [ call bet ]
+]
+Board: pair   [
+  Hand: flush draw [ call bet ]
+]
+Hand: 2 pairs [
+  Hand: flush draw  [ bet until raise, call any ]
+  Board: possible flush [ bet first, call bet, call raise behind ]
+  [ bet until reraise, call reraise behind ]
+]
+Hand: top pair [
+  Hand: flush draw  [ call bet ]
+  Flop Betting: nobet | Position: last [ bet first ]
+]
+Hand: second pair [ others_turn.second pair]
+Hand: flush draw [ call bet, call raise behind ]

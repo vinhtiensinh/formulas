@@ -1,0 +1,5 @@
+| Betting                              | Action |
+| nobet                                | bet    |
+| bet from middle, bet from late       | bet    |
+| raised from middle, raised from late | call   |
+| bet                                  | call   |

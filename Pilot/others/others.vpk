@@ -1,0 +1,5 @@
+| Bet Round | Action         |
+| preflop   | others_preflop |
+| flop      | others_flop    |
+| turn      | others_turn    |
+| river     | others_river   |

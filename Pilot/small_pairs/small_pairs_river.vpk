@@ -1,0 +1,11 @@
+Hand: straight flush, quad, fullhouse [ bet ]
+Board: straight A high & no possible flush & no pair [ bet ]
+Hand: set [ river.set ]
+Board: 1 card flush [ check fold ]
+Board: 1 card straight [ river.1 card straight ]
+Hand: straight & not bottom straight [
+  Board: possible flush [ call bet ]
+  [ bet until raise, call raise behind ]
+]
+Hand: top pair [ river.top pair ]
+Hand: second pair [ others_river.second pair ]

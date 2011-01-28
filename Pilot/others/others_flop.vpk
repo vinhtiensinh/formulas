@@ -1,0 +1,46 @@
+Hand: quad, fullhouse, flush, straight  [ slow play on flop ]
+Board: set [ check fold ]
+Hand: set [ flop.trip ]
+Board: pair   [
+  Board: suited [ check fold ]
+  Hand: flush draw [ call bet ]
+  Hand: top pair >= 9 | Preflop Betting: nobet | Position: late [ bet first, call raise behind ]
+]
+Hand: 2 pairs [
+  Board: suited [ bet until raise ]
+  [ bet until reraise, call reraise behind ]
+]
+@top pair
+Hand: top pair >= 9 [
+  Hand: straight draw & flush draw [ bet ]
+  Hand: flush draw A high, flush draw K high [ bet first, call ]
+  Player: <= 3 [ bet first, call bet, call raise behind ]
+  Board: suited [ check fold ]
+  Hand: flush draw [ bet first, call bet, call raise behind ]
+
+  Preflop Betting: autoplayer lead, nobet [
+
+    Position: last [
+      @top pair active [
+        Hand: kicker >= Q [ bet first, call bet and raise ]
+        Hand: pair   >= T [ bet first, call raise behind  ]
+      ]
+    ]
+
+    Player: <= 4 [ ~top pair active ]
+  ]
+  Preflop Betting: bet | Betting: preflop bettor check [ ~top pair active ]
+]
+
+Hand: flush draw | Board: not suited [ call any ]
+
+Hand: open ended straight draw, busted belly straight draw [
+  Board: 3 over card & 3 cards connected [ check fold ]
+  [ call any ]
+]
+
+@second pair
+Hand: second pair | Position: last | Player: <= 3 [
+  Hand: pair [ bet first, call raise behind ]
+  Hand: no pair & kicker >= J [ bet first, call raise behind ]
+]

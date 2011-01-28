@@ -1,0 +1,343 @@
+Hole Cards: AA   [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~set       :check raise if safe otherwise bet,
+  ~big over pair
+]
+Hole Cards: KK   [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~set       :check raise if safe otherwise bet,
+  ~big over pair,
+  ~big pocket pair with one over card
+]
+Hole Cards: pair [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~set       :check raise if safe otherwise bet,
+  ~over pair :careful with pair on board - check raise with big pair otherwise keep betting,
+  ~pocket pair with one over card,
+  ~pocket pair
+]
+Hole Cards: AK   [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~flush     :slow play,
+  ~straight,
+  ~board set bluff check raise,
+  ~trip,
+  ~big cards with pair on board,
+  ~two big top pairs,
+  ~top pair top kicker,
+  ~two big over cards
+]
+Hole Cards: AQ, AJ, AT [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~flush     :slow play,
+  ~straight,
+  ~board set bluff check raise,
+  ~trip,
+  ~big cards with pair on board,
+  ~two big top pairs,
+  ~top pair top kicker,
+  ~top pair big kicker,
+  ~two big over cards
+]
+Hole Cards: A9, A8 [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~flush     :slow play,
+  ~straight,
+  ~board set bluff check raise,
+  ~trip,
+  ~big cards with pair on board,
+  ~two big top pairs,
+  ~top pair top kicker,
+  ~top pair good kicker,
+  ~two big over cards
+]
+Hole Cards: KQ [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~flush     :slow play,
+  ~straight,
+  ~board set bluff if headup otherwise continue bet or call bet,
+  ~trip,
+  ~board pair,
+  ~two big pairs,
+  ~top pair big kicker,
+  ~two big over cards,
+  ~big second pair,
+  ~nothing or drawing
+]
+Hole cards: KJ [ #implement me
+]
+Hole Cards: QJ [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~flush     :slow play,
+  ~straight,
+  ~board set bluff if headup or check fold,
+  ~trip,
+  ~board pair,
+  ~two pairs,
+  ~top pair big kicker,
+  ~top pair good kicker,
+  ~big second pair,
+  ~nothing or drawing
+]
+Hole Cards: JT [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~flush     :slow play,
+  ~straight,
+  ~board set check fold,
+  ~set :check raise if safe otherwise bet,
+  ~trip,
+  ~board pair,
+  ~two pairs,
+  ~top pair good kicker,
+  ~medium second pair,
+  ~nothing or drawing
+]
+Hole Cards: suited connectors [
+  ~quad      :slow play,
+  ~fullhouse :slow play,
+  ~flush     :slow play,
+  ~straight,
+  ~board set check fold,
+  ~trip,
+  ~board pair,
+  ~two pairs,
+  ~top pair good kicker,
+  ~medium second pair,
+  ~nothing or drawing
+]
+[ #others implements me
+]
+
+# -----------------------------------------------------------------------------
+@quad :slow play
+Hand: quad [~slow play]
+
+@fullhouse :slow play
+Hand: fullhouse [~slow play]
+
+@flush :slow play
+Hand: flush [~slow play]
+
+@straight
+Hand: straight [
+  Board: flush draw, possible straight, possible flush [bet]
+  [~check raise]
+]
+
+# pocket pair on flop
+# -----------------------------------------------------------------------------
+@set :check raise if safe otherwise bet
+Hand: set [
+  Board: no flush draw & no possible straight & no possible flush [~check raise]
+  [bet]
+]
+
+@big over pair  #AA, KK
+Hand: over pair [
+  ~if board is safe :check raise,
+  ~if drawing flush or 2 way straight :keep betting,
+  ~over pair :careful with pair on board - check raise with big pair otherwise keep betting
+]
+
+@if drawing flush or 2 way straight :keep betting
+Hand: flush draw, two way straight draw [bet]
+
+@if board is safe :check raise
+Board: no pair & no flush draw & no straight draw [~check raise]
+
+@over pair :careful with pair on board - check raise with big pair otherwise keep betting
+Hand: over pair [
+  Board: pair | Player: >= 5 [bet first] 
+  Board: pair >= 9 [
+    Player: <= 3 [bet until raise, call any]
+    [bet first, call bet]
+  ]
+  Board: pair <= 9 & pair >= 5 [
+    Player: <= 4 [bet until raise, call any]
+    [bet first, call bet]
+  ]
+  Hole Cards: pair >= KK [~check raise]
+  [bet]
+]
+
+@big pocket pair with one over card
+Hole Cards: pair | Board: 1 over card [
+  Hand: nut flush draw [bet until raise, call any]
+  Hand: two way straight draw [~two way straight draw]
+  Player: 2      [bet first, call bet]
+  Player:  3     [ bet first         ]
+  Position: last [ bet first         ]
+]
+
+@pocket pair with one over card
+Hole Cards: pair | Board: 1 over card [
+  Hand: two way straight draw [~two way straight draw]
+  Player: 2 [bet first, call bet]
+  Player: 3 | Position: last [bet first]
+]
+
+@pocket pair
+Hole Cards: pair [
+  Board: suited [~board suited]
+  Hand: two way straight draw [~two way straight draw]
+]
+
+# -----------------------------------------------------------------------------
+@trip
+Hand: trip [
+  Board: no flush draw & no possible straight & no possible flush [~slow play]
+  [bet]
+]
+
+@two big top pairs
+Hand: 2 pairs | Board: no over card [
+  Board: possible flush, possible flush draw, possible straight [bet]
+  [~check raise]
+]
+
+@two big pairs
+Hand: 2 pairs [
+  ~two big top pairs,
+  ~two big bottom pairs,
+]
+
+@two big bottom pairs
+Hand: 2 pairs | Board: over card [bet]
+
+@two pairs
+Hand: 2 pairs | Board: no over card [bet]
+
+@top pair top kicker
+Hand: top pair & top kicker [
+  Hand: flush draw >= K [bet]
+  Board: suited [bet until raise, call any]
+  Board: different cards >= 9 [bet until raise, call any]
+  [ bet until reraise, call reraise behind ]
+]
+
+@top pair big kicker
+Hand: top pair & kicker >= Q [
+  Hand: flush draw >= K [bet]
+  Board: suited [bet until raise, call any]
+  Board: different cards >= 9 [bet until raise, call any]
+  [ bet until reraise, call reraise behind ]
+]
+
+@top pair good kicker
+Hand: top pair & kicker >= T [
+  Hand: flush draw >= K [bet]
+  Board: suited [bet until raise, call any]
+  Hand: straight draw [bet until raise, call any]
+  Board: different cards >= 9 [bet first, call bet]
+  [ bet until raise, call reraise behind ]
+]
+
+@big second pair
+Hand: second pair [
+  Hand: flush draw [bet first, call bet]
+  Hand: two way straight draw [~two way straight draw]
+  Preflop Betting: autoplayer lead | Player: <= 3 [bet first]
+]
+
+@medium second pair
+Hand: second pair [
+  Hand: flush draw | Board: not suited [call any]
+  Hand: two way straight draw | Board: not suited [call any]
+  Preflop Betting: autoplayer lead | Player: <= 3 [bet first]
+]
+
+@two way straight draw
+Hand: two way straight draw [
+  Board: connected & 3 over card [check fold]
+  Hand: pair [call bet and raise]
+  [call bet, call raise behind]
+]
+
+@two big over cards
+Hand: 2 over cards [
+  Hand: flush draw & straight draw [~check raise]
+  Hand: flush draw [bet until raise, call any]
+  Hand: two way straight draw [bet until raise, call any]
+  Hand: back door flush draw, straight draw [call bet]
+  Board: rainbow & not possible straight [
+    Player: <= 3   [bet first, call raise behind] 
+  ]
+]
+
+@nothing or drawing [
+  Board: suited [~board suited]
+  Hand: flush draw & straight draw [~check raise]
+  Hand: flush draw [bet until raise, call any]
+  Hand: two way straight draw [bet until raise, call any]
+]
+
+@board set bluff check raise
+Board: set [~bluff check raise]
+
+@board set bluff if headup otherwise continue bet or call bet
+Board: set [
+  Player: 2 [flop.bluff check raise]
+  Preflop Betting: autoplayer lead [bet first, call bet]
+]
+
+@board set bluff if headup or check fold
+Board: set [
+  Player: 2 [flop.bluff check raise]
+]
+
+@board set check fold
+Board: set [check fold]
+
+@board suited
+Board: suited [
+  Hand: nut flush draw & straight draw [bet until raise, call any]
+  Hand: nut flush draw | Player: players remain >= 4 [bet]
+  Hand: nut flush draw | Player: players remain <= 3 [bet first, call any]
+  Hand: flush draw >= K [call bet]
+]
+
+@board pair
+Board: pair [
+  Board: over pair & not 3 over card [
+    Preflop Betting: autoplayer lead | Player: 2 [bet first]
+  ]
+  Hand: 2 pairs [bet first, call bet, call raise behind]
+  Player: 2 [
+    Position: last [call bet]
+    [bet first, call raise behind]
+  ]
+]
+
+@big cards with pair on board
+Board: pair [
+  Hand: 2 pairs [bet first, call bet, call raise behind]
+  Player: 2 [
+    Position: last [call bet]
+    [bet first, call raise behind]
+  ]
+]
+
+#------------------------------------------------------------------------------
+@check raise [
+  Preflop Betting: not nobet & any bettor behind [check raise]
+  Player: players behind <= 2 [bet]
+  Player: players behind >= 3 [check raise]
+]
+@slow play [
+  Betting: nobet | Position: last [bet]
+  [call]
+]
+@bluff check raise [
+  | Betting | Action |
+  | nobet   | check  |
+  | bet     | raise  |
+]

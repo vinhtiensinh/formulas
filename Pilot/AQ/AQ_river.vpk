@@ -1,0 +1,38 @@
+Hand : straight flush, quad, fullhouse [ bet ]
+Board: 2 pairs, set [ check fold ]
+Board: 1 card flush [
+  Hand: nut flush [ bet ]
+  Hand: flush Q [ call bet ]
+]
+Hand: flush [
+  Board: pair [ bet until raise, call any ]
+  [ bet ]
+]
+Board: 1 card straight [
+  Hand: straight [
+    Board: possible flush [ call bet ]
+    Board: pair [ bet until raise, call any ]
+    [ bet ]
+  ]
+]
+Hand: straight [
+  Board: possible flush [ call bet ]
+  Board: pair [ bet until raise, call any ]
+  [ bet ]
+]
+Hand: set [
+  Board: no possible straight & no possible flush [ bet ]
+  Board: possible flush       [ call bet ]
+  Board: possible straight    [ bet first, call bet and raise ]
+]
+Board: pair   [
+  Board: possible flush [ check fold ]
+  Hand: top pair [ call bet ]
+]
+Hand: 2 pairs [
+  Board: possible flush [ call bet ]
+  Board: possible straight [ bet first, call bet and raise ]
+  [ bet until raise, call any ]
+]
+Hand: top pair [ call bet ]
+Hand: second pair [others_river.second pair]

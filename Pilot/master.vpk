@@ -1,0 +1,17 @@
+| Hole Cards              | Action                  | 
+| AA                      | AA                      | 
+| KK                      | KK                      | 
+| QQ                      | QQ                      | 
+| JJ                      | JJ                      | 
+| TT                      | TT                      | 
+| 99, 88                  | 99_88                   | 
+| pair <= 77              | small_pairs             | 
+| AK                      | AK                      | 
+| AQ                      | AQ                      | 
+| AJ                      | AJ                      | 
+| AT                      | AT                      | 
+| KQ                      | KQ                      | 
+| JQ                      | JQ                      | 
+| JT                      | JT                      | 
+| suited connectors <= 98 | small_suited_connectors | 
+|                         | others                  | 

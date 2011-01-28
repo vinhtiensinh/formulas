@@ -1,0 +1,10 @@
+Hand: quad, fullhouse  [ slow play on flop ]
+Hand: set [ flop.set ]
+Board: suited [ check fold ]
+Hand: open ended straight draw [
+  Board: 3 cards connected & over card [ check fold ]
+  Board: over card    [ call raise                    ]
+  Board: no over card [ bet until raise, call reraise ]
+]
+Hand: top pair [ others_flop.top pair ]
+Hand: second pair [ others_flop.second pair ]

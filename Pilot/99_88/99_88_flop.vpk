@@ -1,0 +1,22 @@
+Hand: quad, fullhouse  [ slow play on flop ]
+Hand: set [ flop.set ]
+Board: suited [
+  Board: no over card [
+    Position: last [ bet first, call bet ]
+    [ call bet ]
+  ]
+]
+Hand: open ended straight draw [
+  Board: 3 cards connected & over card [ check fold ]
+  Board: over card    [ call raise                    ]
+  Board: no over card [ bet until raise, call reraise ]
+]
+
+Hand: over pair [
+  Board: pair [
+    Board: pair <= 5 [ call bet ]
+  ]
+  [ bet first, raise bet, call raise behind ]
+]
+
+Board: 1 over card [ others_flop.second pair ]

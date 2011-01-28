@@ -1,0 +1,28 @@
+Hand: quad, fullhouse  [ slow play on flop ]
+Hand: set [ flop.set ]
+Hand: flush draw [ 
+  Board: A     [ bet first, call any ]
+  Board: no A  [ bet until reraise   ]
+]
+Hand: open ended straight draw [
+  Board: over card [ call any ]
+  [ bet first, call any ]
+]
+Board: over card [
+  Position: last                       [ bet first ]
+  Position: second last | Player: <= 3 [ bet first ]
+]
+Board: pair   [
+  Board: pair < 9  [
+    Board: possible flush draw:    [ bet ]
+    Board: possible straight draw: [ bet ]
+    Player: > 3  [ bet until raise ]
+    Player: <= 3 [ bet first, call any ]
+  ]
+  Board: pair >= 9 [
+    Player: 2 [ bet until raise     ]
+    Player: 3 [ bet first, call bet ]
+  ]
+]
+Board: different cards >= 9 [ bet until raise ]
+[ bet until reraise, call reraise behind ]

@@ -1,0 +1,1 @@
+mvim -p $1/$1.vpk $1/$1_preflop.vpk $1/$1_flop.vpk $1/$1_turn.vpk $1/$1_river.vpk

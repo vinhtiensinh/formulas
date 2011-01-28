@@ -1,0 +1,68 @@
+- check call:
+    - Betting. bet: call
+
+- check fold:
+    - Betting. nobet: check
+    - Betting. bet: fold
+
+- check raise:
+    - Betting. nobet: check
+    - bet
+
+- limp:
+    - Betting. nobet: call
+
+- call bet:
+    - Betting. bet: call
+
+- call any: call
+
+- call reraise behind:
+    - Betting. autoplayer raised & reraised: call
+
+- call raise behind:
+    - Betting. autoplayer bet & raised: call
+
+- call bet from middle position:
+    - Betting. bet from middle: call
+
+- call bet from late position:
+    - Betting. bet from late: call
+
+- call bet behind:
+    - Action Round. > 1 | Betting. bet: call
+
+- call raise:
+    - Betting. raised: call
+
+- call bet and raise:
+    - Betting. bet; raised: call
+
+- bet first:
+    - Betting. nobet: bet
+
+- call reraise:
+    - Betting. reraised: call
+
+- bet until raise:
+    - Betting. nobet; bet: bet
+    - Betting. raised: call
+
+- bet until reraise:
+    - Betting. nobet; bet; raised: bet
+    - Betting. reraised: call
+
+- raise bet:
+    - Betting. bet: bet
+
+- raise continue bet:
+    - Betting. continue bet: bet
+
+- call bet or open:
+    - bet first
+    - call bet
+    - call raise behind
+
+- fold bet or open:
+    - bet first
+    - call raise behind

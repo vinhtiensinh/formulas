@@ -1,0 +1,21 @@
+Hand: straight flush, quad, fullhouse [ bet ]
+Board: 2 pairs [
+  Board: 2 pairs <= 5 [ check call ] 
+  Board: 2 pairs      [ check fold ] 
+]
+Board: 1 card flush [ check fold ]
+Board: 1 card straight [ river.1 card straight ]
+Hand: set [ river.set ]
+Turn: possible flush, possible straight [
+  Turn Betting: nobet [ call bet ]
+  Turn Betting: autoplayer lead [ call bet behind ]
+]
+Board: over card [
+  Board: 1 over card & no pair [
+    Player: <= 3 | Turn Betting: autoplayer lead [ call bet behind ]
+  ]
+]
+Board: pair [
+  Board: pair <= 5 [ call bet ]
+]
+[ river.top pair ]

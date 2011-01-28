@@ -1,0 +1,32 @@
+Hand: quad, fullhouse, flush, straight  [ slow play on flop ]
+Board: set [ check fold ]
+Hand: set [
+  Board: no straight draw & no flush draw [ slow play on flop ]
+  Board: straight draw, flush draw     [ bet               ]
+]
+Hand: nut flush draw [ bet until raise, call any ]
+Board: pair   [
+  Hand: top pair T [
+      Board: pair <  9 | Player: <= 3 [ bet first, call bet ]
+      Board: pair >= 9 | Player: 2    [ bet first, call bet ]
+    ]
+]
+Hand: 2 pairs [
+  Board: suited [ bet until raise ]
+  [ bet until reraise, call reraise behind ]
+]
+Hand: top pair [
+  Hand: pair T [
+    Board: suited [ bet until raise ]
+    Board: different cards >= 9 [ bet until raise ]
+    [ bet first, raise bet  ]
+  ]
+  Hand: pair A [
+    Preflop Betting: autoplayer lead, nobet [
+      Board: suited [ bet until raise ]
+      Board: different cards >= 9 [ bet until raise ]
+      [ bet first, raise bet  ]
+    ]
+  ]
+]
+Hand: second pair [ others_flop.second pair]

@@ -1,0 +1,8 @@
+@set [
+  Board: no straight draw & no flush draw & no possible straight & no possible flush [ slow play on flop ]
+  [ bet ]
+]
+@trip [
+  Board: no straight draw & no flush draw & no possible straight & no possible flush [ slow play on flop ]
+  [ bet ]
+]

@@ -1,0 +1,58 @@
+Hand : straight flush, quad, fullhouse [ slow play on turn ]
+Hand: set [ turn.set ]
+Board: 2 pairs [
+  Board: 2 pairs <= 5 [ check call ] 
+  Board: 2 pairs      [ check fold ] 
+]
+Board: 1 card flush [
+  Hand: flush A high [ slow play on turn ]
+  Hand: flush K high [ bet until raise   ]
+]
+Board: 1 card straight [
+  Hand: straight [
+    Board: possible flush [ bet first, call bet ]
+    Hand: straight A high [ slow play on turn   ]
+    [ bet until raise, call any ]
+  ]
+]
+Hand: flush draw [
+  Board: A [
+    Hand: flush draw A high [ call bet ]
+  ]
+  Board: pair <= 5, less than 3 cards >= 9 [ bet until raise ]
+  [ call bet ]
+]
+Hand: open ended straight draw [ call bet and raise ]
+Board: over card [
+  Flop Betting: autoplayer lead, nobet [
+    Position: last [ bet first ]
+  ]
+]
+Board: pair [
+  Board: pair < 9 [
+  Board: possible straight, possible flush [ bet first, call bet, call raise behind ]
+    [ bet ]
+  ]
+  Board: pair >= 9 [
+    Board: no possible flush & no possible straight [
+      Flop Betting: autoplayer lead, nobet [
+        Player: 2      [ bet first, call bet ]
+        Position: last [ bet first ] 
+      ]
+      Flop Betting: opponent lead [ call bet ]
+    ]
+    Board: possible straight, possible flush [
+      Player: 2 [
+        Flop Betting: autoplayer lead [ bet first ]
+        Flop Betting: opponent lead   [ call bet  ]
+      ]
+    ]
+  ]
+]
+Board: different cards >= 9 [ call bet behind ]
+Board: 3 cards >= 9 [
+  Flop Betting: autoplayer lead [ bet first, call bet, call raise behind ]
+  [ call bet ]
+]
+Flop Betting: autoplayer lead [ bet first, call bet, call raise behind ]
+[ call bet ]

@@ -1,0 +1,109 @@
+rules:
+  - Hole Cards. AA; KK: ~check raise late position or bet
+
+  - Hole Cards. QQ; JJ: bet
+
+  - Hole Cards. TT; 99:
+      - ~early position limp or call one bet
+      - call bet or open 
+
+  - Hole Cards. 88; 77:
+      - ~early position limp or call one bet
+      - ~enough callers limp or call one bet
+
+  - Hole Cards. 66; 55: ~nobet limp
+
+  - Hole Cards. pair <= 44:
+      - Position. middle; late; blind: ~enough callers limp
+
+  - Hole Cards. AK: ~check raise late position or bet
+  
+  - Hole Cards. AQ: bet until raise, call reraise behind
+
+  - Hole Cards. AJ:
+      - Hole Cards. suited:            call bet or open
+      - Position. early:               ~nobet limp
+      - Position. middle; late; blind: fold bet or open
+
+  - Hole Cards. AT:
+      - Position. early:
+          - Hole Cards. suited: ~nobet limp
+      - Hole Cards. suited: call bet or open
+      - fold bet or open
+
+  - Hole Cards. A9:
+      - Position. early; middle | Hole Cards. suited: ~nobet limp
+      - Position. late; blind: 
+          - Hole Cards. suited: call bet or open
+          - fold bet or open
+
+  - Hole Cards. A8:
+      - Position. late | Hole Cards. suited: fold bet or open
+
+  - Hole Cards. KQ:
+      - Position. early:
+          - Hole Cards. suited: fold bet or open
+          - ~nobet limp
+      - Hole Cards. suited: call bet or open
+      - fold bet or open
+
+  - Hole Cards. KJ:
+      - Position. early:
+          - Hole Cards. suited: ~nobet limp
+      - Hole Cards. suited: call bet or open
+      - fold bet or open
+
+  - Hole Cards. QJ:
+      - Hole Cards. suited:            ~limp or call one bet
+      - Position. middle; late; blind: ~nobet limp
+
+  - Hole Cards. JT:
+      - Position. early: 
+          - Hole Cards. suited: ~nobet limp
+      - ~nobet limp
+
+  - Hole Cards. T9s; 98s:
+      - Position. middle; late; blind: ~nobet limp
+
+  - Hole Cards. 78s; 76s:
+      - Position. middle: ~enough callers limp
+      - Position. late; blind: ~nobet limp
+
+  - Hole Cards. 54s; 32s:
+      - Position. late; blind: ~enough callers limp
+
+  - all else:
+      - Position. middle:
+          - Hole Cards. AXs; KXs & >= K8:         ~nobet limp
+          - Hole Cards. suited & gap1 >= T8; K7s: ~enough callers limp
+      - Position. late:
+          - Hole Cards. suited & gap1 >= 75; AXs; KXs; QT; KT: ~nobet limp
+          - Hole Cards. suited & gap1 >= 53; QXs:              ~enough callers limp
+      - Position. blind:
+          - Hole Cards. suited & gap1 >= 53; QXs:              ~enough callers limp
+          - Hole Cards. suited & gap1 >= 75; AXs; KXs; QT; KT: ~nobet limp
+
+with:
+  check raise late position or bet:
+    - Preflop Betting. fold to me | Position. button: check raise
+    - bet
+
+  early position limp or call one bet:
+    - Position. early: ~limp or call one bet
+
+  enough callers limp or call one bet:
+    - Action Round. 1 | Player. players before >= 4: ~limp or call one bet
+    - Action Round. 2 | Betting. bet; raised: call
+
+  enough callers limp:
+    - Action Round. 1 | Player. players before >= 4: ~nobet limp
+    - Action Round. 2 | Betting. bet: call
+
+  nobet limp:
+    - limp
+    - call bet behind
+
+  limp or call one bet:
+    - limp
+    - call bet
+    - call raise behind

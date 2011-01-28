@@ -1,0 +1,32 @@
+Hand: quad, fullhouse  [ slow play on flop ]
+Hand: set [ flop.set ]
+Board: suited [
+  Board: no over card [
+    Position: last [ bet first, call bet ]
+    [ call bet ]
+  ]
+]
+Hand: open ended straight draw [
+  Board: over card [ call any ]
+  [ bet first, call any ]
+]
+Board: over card [
+  Hand: open ended straight draw [ call any ]
+  Board: 1 over card [
+    Position: last [ bet first ]
+    Player: 2 | Preflop Betting: autoplayer lead [ bet first ]
+  ]
+]
+Board: pair   [
+  Board: pair < 9  [
+    Board: possible flush draw    [ bet ]
+    Board: possible straight draw [ bet ]
+    Player: > 3  [ bet until raise     ]
+    Player: <= 3 [ bet first, call any ]
+  ]
+  Board: pair >= 9 [
+    Player: 2 [ bet until raise     ]
+    Player: 3 [ bet first, call bet ]
+  ]
+]
+[ bet first, raise bet, call raise behind ]

@@ -1,0 +1,14 @@
+Hole Cards: AX [
+  Preflop Betting: fold to me | Position: late [ bet first, call raise behind ]
+  Hole Cards: AXs | Position: last, blind | Player: players remain >= 5 [ call ]
+]
+Hole Cards: KJ [
+  Preflop Betting: fold to me | Position: late [ bet first, call raise behind ]
+  Position: late, blind [ bet first, call raise behind ]
+]
+Hole Cards: gap1 >= J9, gap2 >= Q9, K9 [
+  Position: late | Player: players remain >= 6 [ limp, call bet behind ]
+  Position: small blind | Player: players remain >= 4 [ limp, call bet behind ]
+]
+Position: small blind | Player: players remain >= 5 [ limp,    ]
+Position: big blind   | Player: players remain >= 5 [ call bet ]

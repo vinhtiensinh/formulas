@@ -1,0 +1,23 @@
+Hand: quad, fullhouse, flush, straight  [ slow play on flop ]
+Board: set [ bet until raise, call any ]
+Hand: set [ flop.trip ]
+Hand: flush draw [ bet until raise, call any ]
+Board: pair   [
+  Hand: pair A, pair K [
+    Board: pair <  9 | Player: <= 3 [ bet first, call bet ]
+    Board: pair >= 9 | Player: 2    [ bet first, call bet ]
+  ]
+]
+Hand: 2 pairs [
+  Board: suited [ bet until raise ]
+  [ bet until reraise, call reraise behind ]
+]
+Hand: pair [
+  Board: suited [ bet until raise ]
+  Board: different cards >= 9 [ bet until raise ]
+  [ bet until reraise, call reraise behind ]
+]
+Board: rainbow & no straight draw [
+  Player: <= 3   [ bet first, call raise behind ] 
+  Position: late [ bet first, call raise behind ] 
+]

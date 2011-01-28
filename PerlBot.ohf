@@ -1,0 +1,83 @@
+##2009-01-18 22:18:49##
+##notes##
+//
+//  A very simple formula
+//    for a nearly empty Perl bot.
+//
+//  2008.03.09 by THF
+//
+
+##dll##
+
+##bankroll##
+0.000000
+
+##defcon##
+0.000000
+
+##rake##
+0.000000
+
+##nit##
+1000
+
+##f$alli##
+pl_allin  
+
+##f$swag##
+pl_swag  
+##f$srai##
+0  
+
+##f$rais##
+pl_raise
+
+##f$call##
+pl_call
+
+##f$prefold##
+//  Default is: do not prefold
+0 
+
+##f$evrais##
+0  
+
+##f$evcall##
+0 
+
+##f$P##
+3  
+
+##f$play##
+pl_play
+
+##f$test##
+
+
+##f$debug##
+                 = elapsed
+
+                 = sblind
+                 = bblind
+                 = bet
+
+                 = call
+                 = currentbet
+                 = balance
+
+                 = f$evcall
+                 = f$evrais
+
+                 = potplayer
+                 = potcommon
+                 = pot
+                 = rake
+
+                 = chair
+                 = handrank2652
+                 = pokerval
+                 = prwin
+                 = prlos
+                 = prtie
+                 = nopponents
+

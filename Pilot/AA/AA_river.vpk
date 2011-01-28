@@ -1,0 +1,39 @@
+Hand: straight flush, quad, fullhouse [ bet ]
+Board: straight A high & no possible flush & no pair [ bet ]
+Board: 2 pairs [
+  Board: 2 pairs <= 5 [ check call ] 
+  Board: 2 pairs      [ check fold ] 
+]
+Board: 1 card flush [
+  Hand: flush [
+    Board: pair [ bet first, call bet, call raise behind ]
+    [ bet ]
+  ]
+]
+Board: 1 card straight [
+  Hand: straight A high [
+    Board: pair [
+      Board: possible flush    [ call bet ]
+      Board: no possible flush [ bet until raise, call raise behind ]
+    ]
+    Board: possible flush [ call bet ]
+    [ bet ]
+  ]
+]
+
+Hand: set [ river.set ]
+Turn: possible flush, possible straight [
+  Turn Betting: nobet [ call bet ]
+  Turn Betting: autoplayer lead [ call bet behind ]
+]
+Board: pair [
+  Board: pair < 9  [
+    Board: no possible straight & no possible flush [ bet first, call bet ]
+    Board: possible straight, possible flush         [ call bet           ]
+  ]
+  Turn: pair >= 9 [
+    Turn Betting: nobet [ call bet ]
+  ]
+  [ call bet ]
+]
+[ river.top pair ]

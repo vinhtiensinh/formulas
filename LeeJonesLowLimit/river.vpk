@@ -1,0 +1,121 @@
+Hole Cards: AA [
+  ~straight flush  :bet,
+  ~quad            :bet,
+  ~fullhouse       :bet,
+  ~1 card flush    :play flush only,
+  ~flush           :bet,
+  ~board straight  :call bet,
+  ~1 card straight :play straight ortherwise call bet,
+  ~straight        :careful with possible flush ortherwise bet,
+  ~set,
+  ~big over pair
+]
+Hole Cards: KK, QQ, JJ [
+  ~straight flush  :bet,
+  ~quad            :bet,
+  ~fullhouse       :bet,
+  ~1 card flush    :play flush only,
+  ~flush           :bet,
+  ~board straight  :call bet,
+  ~1 card straight :play straight ortherwise call bet,
+  ~straight        :careful with possible flush ortherwise bet,
+  ~set,
+  ~big over pair,
+  ~big pair 1 over card
+]
+Hole Cards: pair []
+
+# -----------------------------------------------------------------------------
+@straight flush :bet
+Hand: straight flush [bet]
+
+@quad :bet
+Hand: quad [bet]
+
+@fullhouse :bet
+Hand: fullhouse [bet]
+
+@board straight :call bet
+Board: straight [call bet]
+
+@board two pairs
+Board: 2 pairs [
+  Hand: fullhouse [bet]
+]
+
+@1 card flush :play flush only
+Board: 1 card flush [
+  Hand: nut flush [bet]
+  Hand: flush >= Q [call bet]
+]
+
+@flush :bet
+Hand: flush [bet]
+
+@1 card straight :play straight ortherwise call bet
+Board: 1 card straight [
+  Hand: straight [~straight :careful with possible flush ortherwise bet]
+  [call bet]
+]
+
+@straight :careful with possible flush ortherwise bet
+Hand: straight [
+  Board: possible flush [call bet and raise]
+  [bet]
+]
+
+@big over pair
+Hand: over pair [
+  Turn Betting: autoplayer lead [bet first, call bet, call raise behind]
+  [call bet]
+]
+
+@set
+Hand: set [
+  Board: no possible straight & no possible flush [
+    Hand: top set [ bet ]
+    [ bet until reraise ]
+  ]
+  [ bet until raise ]
+]
+
+@trip
+Hand: set [
+  Board: no possible straight & no possible flush [
+    Hand: kicker >= J [ bet until raise, call any ]
+    [ bet until raise ]
+  ]
+  [ bet first, call bet ]
+]
+
+@1 card straight
+Board: 1 card straight [
+  Hand: straight & not bottom straight [
+    Board: possible flush [bet first, call bet, call raise behind ]
+    Board: pair [ bet until raise, call reraise behind ]
+    Hand: nut straight [ bet ]
+    [ bet until raise, call any ]
+  ]
+  Preflop Betting: bet, raised | Flop Betting: nobet | Turn Betting: nobet [
+    Hand: straight, set, 2 pairs, top pair, second pair & kicker >= J [
+      Board: 1 card straight <= 8 [ call bet ]
+      Player:  <= 3               [ call bet ]
+    ]
+  ]
+]
+
+@top pair
+Hand: top pair [
+  Turn Betting: nobet, autoplayer lead [ bet first, call bet, call raise behind ]
+  [ call bet ]
+]
+
+@big pair 1 over card
+Board: 1 over card [
+  Board: pair [
+    Player: 2 | Turn Betting: autoplayer lead [call bet]
+  ]
+  Board: no pair [
+    Player: <= 3 | Turn Betting: autoplayer lead [ call bet behind ]
+  ]
+]

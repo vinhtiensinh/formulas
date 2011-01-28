@@ -1,0 +1,32 @@
+@set  [
+  Board: no possible straight & no possible flush [
+    Hand: top set [ bet ]
+    [ bet until reraise ]
+  ]
+  [ bet until raise ]
+]
+@trip [
+  Board: no possible straight & no possible flush [
+    Hand: kicker >= J [ bet until raise, call any ]
+    [ bet until raise ]
+  ]
+  [ bet first, call bet ]
+]
+@1 card straight [
+  Hand: straight & not bottom straight [
+    Board: possible flush [bet first, call bet, call raise behind ]
+    Board: pair [ bet until raise, call reraise behind ]
+    Hand: nut straight [ bet ]
+    [ bet until raise, call any ]
+  ]
+  Preflop Betting: bet, raised | Flop Betting: nobet | Turn Betting: nobet [
+    Hand: straight, set, 2 pairs, top pair, second pair & kicker >= J [
+      Board: 1 card straight <= 8 [ call bet ]
+      Player:  <= 3               [ call bet ]
+    ]
+  ]
+]
+@top pair [
+  Turn Betting: nobet, autoplayer lead [ bet first, call bet, call raise behind ]
+  [ call bet ]
+]

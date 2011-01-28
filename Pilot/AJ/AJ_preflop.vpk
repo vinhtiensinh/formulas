@@ -1,0 +1,16 @@
+Position: early  [
+  Hand: suited [ limp, call bet, call raise behind ]
+]
+Position: middle [
+  Hand: suited [ limp, call bet, call raise behind ]
+  [ limp, call bet behind ]
+]
+Position: late   [
+  bet first,
+  call bet from middle position,
+  call bet from late position,
+  call raise behind
+]
+Position: blind  [
+  Hand: suited [ limp, call bet, call raise behind ]
+]
