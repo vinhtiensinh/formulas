@@ -1,103 +1,246 @@
 template:
-    big pair: &pair
-      - Hand. quad: ~slow play
-      - Hand. fullhouse: ~slow play
-      - Hand. set: ~check raise if safe otherwise bet
-      - Hand. over pair: ~big over pair
+    made hands: &MadeHands
+        - Hand. quad:      ~slow play
+        - Hand. fullhouse: ~slow play
+        - Hand. flush:     ~slow play
+        - Hand. straight:  ~straight
+
+    big pair: &Pair
+        use: *MadeHands
+        rules:
+            - Hand. set: ~check raise if safe otherwise bet
+            - Hand. over pair: ~big over pair
+
+    big cards: &BigCards
+        use: *MadeHands
+        rules:
+            - Board. set: ~bluff check raise
+            - Hand. trip: ~trip
+            - ~big cards with pair on board
+            - ~two big top pairs
+            - ~top pair top kicker
 
 rules:
-  - Hole Cards. AA:
-      use: *pair
+    - Hole Cards. AA:
+        use: *Pair
 
-  - Hole Cards. KK:
-      use: *pair
-      rules:
-        - ~big pocket pair with one over card
+    - Hole Cards. KK:
+        use: *Pair
+        rules:
+            - ~big pocket pair with one over card
 
-  - Hole Cards. pair:
-      use: *pair
-      rules:
-        - Hand. over pair: ~careful with pair on board check raise with big pair otherwise keep betting
-        - ~pocket pair with one over card
-        - ~pocket pair
-      with:
+    - Hole Cards. pair:
+        use: *Pair
+        rules:
+            - Hand. over pair: ~careful with pair on board check raise with big pair otherwise keep betting
+            - ~pocket pair with one over card
+            - ~pocket pair
 
+    - Hole Cards. AK:
+        use: *BigCards
+        rules:
+            - ~two big over cards
+
+    - Hole Cards. AQ; AJ; AT:
+        use: *BigCards
+        rules:
+            - ~top pair big kicker
+            - ~two big over cards
+
+    - Hole Cards. A9; A8:
+        use: *BigCards
+        rules:
+            - ~top pair good kicker
+            - ~two big over cards
+
+    - Hole Cards. KQ:
+        use: *MadeHands
+        rules:
+            - Board. set:      ~bluff if headup otherwise continue bet or call bet
+            - Hand. trip:      ~trip
+            - Board. pair:     ~board pair
+            - Hand. 2 pairs:   ~two big pairs
+            - ~top pair big kicker,
+            - ~two big over cards,
+            - ~big second pair,
+            - ~nothing or drawing
 
 with:
-  slow play:
-    - Betting. nobet | Position. last: bet
-    - call
+    slow play:
+        - Betting. nobet | Position. last: bet
+        - call
 
-  check raise if safe otherwise bet:
-      - Board. no flush draw & no possible straight & no possible flush: ~check raise
-      - bet
+    check raise if safe otherwise bet:
+        - Board. no flush draw & no possible straight & no possible flush: ~check raise
+        - bet
 
-  big over pair:  #AA, KK
-      - Hand. over pair:
-          - ~check raise if safe otherwise bet
-          - ~if drawing flush or 2 way straight keep betting
-          - ~careful with pair on board check raise with big pair otherwise keep betting
+    big over pair:  #AA, KK
+        - Hand. over pair:
+            - ~check raise if safe otherwise bet
+            - ~if drawing flush or 2 way straight keep betting
+            - ~careful with pair on board check raise with big pair otherwise keep betting
 
-  if drawing flush or 2 way straight keep betting:
-      - Hand. flush draw; two way straight draw: bet
+    if drawing flush or 2 way straight keep betting:
+        - Hand. flush draw; two way straight draw: bet
 
-  careful with pair on board check raise with big pair otherwise keep betting:
-    - Board. pair | Player. >= 5: bet first 
-    - Board. pair >= 9:
-        - Player. <= 3: [bet until raise, call any]
-        - bet first
-        - call bet
-    - Board. pair <= 9 & pair >= 5:
-        - Player. <= 4: [bet until raise, call any]
-        - bet first
-        - call bet
-    - Hole Cards. pair >= KK: ~check raise
-    - bet
+    careful with pair on board check raise with big pair otherwise keep betting:
+        - Board. pair | Player. >= 5: bet first 
+        - Board. pair >= 9:
+            - Player. <= 3: [bet until raise, call any]
+            - bet first
+            - call bet
+        - Board. pair <= 9 & pair >= 5:
+            - Player. <= 4: [bet until raise, call any]
+            - bet first
+            - call bet
+        - Hole Cards. pair >= KK: ~check raise
+        - bet
 
-  big pocket pair with one over card:
-      - Hole Cards. pair | Board. 1 over card:
-          - Hand. nut flush draw:
-              - bet until raise
-              - call any
-          - Hand. two way straight draw: ~two way straight draw
-          - Player. 2:
-              - bet first
-              - call bet
-          - Player.  3:     bet first
-          - Position. last: bet first
-
-  pocket pair with one over card:
-       - Hole Cards. pair | Board. 1 over card:
+    big pocket pair with one over card:
+        - Hole Cards. pair | Board. 1 over card:
+            - Hand. nut flush draw:
+                - bet until raise
+                - call any
             - Hand. two way straight draw: ~two way straight draw
             - Player. 2:
                 - bet first
                 - call bet
-            - Player. 3 | Position. last: bet first
+            - Player.  3:     bet first
+            - Position. last: bet first
 
-  pocket pair:
-      - Hole Cards. pair:
-           - Board. suited: ~board suited
-           - Hand. two way straight draw: ~two way straight draw
+    pocket pair with one over card:
+         - Hole Cards. pair | Board. 1 over card:
+              - Hand. two way straight draw: ~two way straight draw
+              - Player. 2:
+                  - bet first
+                  - call bet
+              - Player. 3 | Position. last: bet first
 
-  board suited:
-    - Board. suited:
-          - Hand. nut flush draw & straight draw:
-              - bet until raise
-              - call any
-          - Hand. nut flush draw | Player. players remain >= 4: bet
-          - Hand. nut flush draw | Player. players remain <= 3:
-              - bet first
-              - call any
-          - Hand. flush draw >= K: call bet
+    pocket pair:
+        - Hole Cards. pair:
+             - Board. suited: ~board suited
+             - Hand. two way straight draw: ~two way straight draw
 
-  two way straight draw:
-      - Hand. two way straight draw:
-          - Board. connected & 3 over card: check fold
-          - Hand. pair: call bet and raise
-          - call bet
-          - call raise behind
+    board suited:
+        - Board. suited:
+              - Hand. nut flush draw & straight draw:
+                  - bet until raise
+                  - call any
+              - Hand. nut flush draw | Player. players remain >= 4: bet
+              - Hand. nut flush draw | Player. players remain <= 3:
+                  - bet first
+                  - call any
+              - Hand. flush draw >= K: call bet
 
-  check raise:
-      - Preflop Betting. not nobet & any bettor behind: check raise
-      - Player. players behind <= 2: bet
-      - Player. players behind >= 3: check raise
+    two way straight draw:
+        - Hand. two way straight draw:
+            - Board. connected & 3 over card: check fold
+            - Hand. pair: call bet and raise
+            - call bet
+            - call raise behind
+
+    check raise:
+        - Preflop Betting. not nobet & any bettor behind: check raise
+        - Player. players behind <= 2: bet
+        - Player. players behind >= 3: check raise
+
+    bluff check raise:
+        - Betting. nobet: check
+        - Betting. bet | Action Round. 2: raise
+
+    trip:
+        - Hand. trip:
+            - Board. no flush draw & no possible straight & no possible flush: ~slow play
+            - bet
+
+    straight:
+        - Hand. straight:
+              - Board. flush draw; possible straight; possible flush: bet
+              - ~check raise
+
+    big cards with pair on board:
+        - Board. pair:
+            - Hand. 2 pairs:
+                - bet first
+                - call bet
+                - call raise behind
+            - Player. 2:
+                - Position. last: call bet
+                - bet first
+                - call raise behind
+
+    two big top pairs:
+        - Hand. 2 pairs | Board. no over card:
+              - Board. possible flush; possible flush draw; possible straight: bet
+              - ~check raise
+
+    top pair top kicker:
+        - Hand. top pair & top kicker:
+              - Hand. flush draw >= K: bet
+              - Board. suited:
+                  - bet until raise
+                  - call any
+              - Board. different cards >= 9:
+                  - bet until raise
+                  - call any
+              - bet until reraise
+              - call reraise behind
+
+    two big over cards:
+        - Hand. 2 over cards:
+            - Hand. flush draw & straight draw:          ~check raise
+            - Hand. flush draw:                          bet until raise, call any
+            - Hand. two way straight draw:               bet until raise, call any
+            - Hand. back door flush draw; straight draw: call bet
+
+            - Board. rainbow & not possible straight:
+                - Player. <= 3: bet first, call raise behind 
+
+    top pair big kicker:
+        - Hand. top pair & kicker >= Q:
+            - Hand. flush draw >= K: bet
+            - Board. suited: bet until raise, call any
+            - Board. different cards >= 9: bet until raise, call any
+            - bet until reraise, call reraise behind
+
+    top pair good kicker:
+        - Hand. top pair & kicker >= T:
+            - Hand. flush draw >= K: bet
+            - Board. suited: bet until raise, call any
+            - Hand. straight draw: bet until raise, call any
+            - Board. different cards >= 9: bet first, call bet
+            - bet until raise, call reraise behind
+
+    bluff if headup otherwise continue bet or call bet:
+        - Board. set:
+            - Player. 2: ~bluff check raise
+            - Preflop Betting. autoplayer lead: bet first, call bet
+
+    board pair:
+        - Board. pair:
+            - Board. over pair & not 3 over card:
+                - Preflop Betting. autoplayer lead | Player. 2: bet first
+            - Hand. 2 pairs: bet first, call bet, call raise behind
+            - Player. 2:
+                - Position. last: call bet
+                - bet first, call raise behind
+
+    two big pairs:
+        - Hand. 2 pairs:
+            - ~two big top pairs
+            - ~two big bottom pairs
+
+    two big bottom pairs:
+        - Hand. 2 pairs | Board. over card: bet
+
+    big second pair:
+        - Hand. second pair:
+            - Hand. flush draw: bet first, call bet
+            - Hand. two way straight draw: ~two way straight draw
+            - Preflop Betting. autoplayer lead | Player. <= 3: bet first
+
+    nothing or drawing:
+        - Board. suited: ~board suited
+        - Hand. flush draw & straight draw: ~check raise
+        - Hand. flush draw: bet until raise, call any
+        - Hand. two way straight draw: bet until raise, call any
