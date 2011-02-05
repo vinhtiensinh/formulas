@@ -41,7 +41,7 @@ rules:
         use: *pair
         with:
             Board. 1 card flush: check fold
-            Hand. pair: ~big over pair
+            Hand. over pair: ~big over pair
             Board. 1 over card: ~big pair 1 over card
 
 with:

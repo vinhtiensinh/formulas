@@ -4,11 +4,11 @@ rules:
     - Hole Cards. QQ; JJ: bet
   
     - Hole Cards. TT; 99:
-        - ~early position limp or call one bet
+        - Position. early: ~limp or call one bet
         - call bet or open 
   
     - Hole Cards. 88; 77:
-        - ~early position limp or call one bet
+        - Position. early: ~limp or call one bet
         - ~enough callers limp or call one bet
   
     - Hole Cards. 66; 55: ~nobet limp
@@ -87,9 +87,6 @@ with:
     check raise late position or bet:
         - Preflop Betting. fold to me | Position. button: check raise
         - bet
-  
-    early position limp or call one bet:
-        - Position. early: ~limp or call one bet
   
     enough callers limp or call one bet:
         - Action Round. 1 | Player. players before >= 4: ~limp or call one bet
