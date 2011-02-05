@@ -1,0 +1,54 @@
+template:
+    pair: &pair
+        - Hand. straight flush:   bet
+        - Hand. quad:             bet
+        - Hand. fullhouse:        bet
+        - Board. 1 card flush:    ~play flush only
+        - Hand. flush:            bet
+        - Board. straight:        call bet
+        - Board. 1 card straight: ~play straight ortherwise call bet
+        - Hand. straight:         ~careful with possible flush ortherwise bet
+        - Hand. set:              ~set
+        - Hand. over pair:        bet first, call bet
+        - Board. 1 over card:      check fold
+rules:
+    
+    - Hole Cards. AA:
+        use: *pair
+        with:
+            Hand. over pair: ~big over pair
+
+    - Hole Cards. KK; QQ; JJ:
+        use: *pair
+        with:
+            Board. 1 over card: ~big pair 1 over card
+
+with:
+
+    play straight ortherwise call bet:
+        - Hand. straight: ~careful with possible flush ortherwise bet
+        - call bet
+             
+    careful with possible flush ortherwise bet:
+        - Board. possible flush: call bet and raise
+        - bet
+
+    set:
+        - Board. no possible straight & no possible flush:
+            - Hand. top set: bet
+            - bet until reraise
+        - bet until raise
+
+    play flush only:
+        - Hand. nut flush: bet
+        - Hand. flush >= Q: call bet
+
+    big over pair:
+        - Turn Betting. autoplayer lead: bet first, call bet, call raise behind
+        - call bet
+
+    big pair 1 over card:
+        - Board. pair:
+            - Player. 2 | Turn Betting. autoplayer lead: call bet
+        - Board. no pair:
+            - Player. <= 3 | Turn Betting. autoplayer lead: call bet behind

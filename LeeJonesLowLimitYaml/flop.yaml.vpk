@@ -60,9 +60,44 @@ rules:
             - Hand. trip:      ~trip
             - Board. pair:     ~board pair
             - Hand. 2 pairs:   ~two big pairs
-            - ~top pair big kicker,
-            - ~two big over cards,
-            - ~big second pair,
+            - ~top pair big kicker
+            - ~two big over cards
+            - ~big second pair
+            - ~nothing or drawing
+
+    - Hole Cards. QJ:
+        use: *MadeHands
+        rules:
+            - Board. set: ~bluff if headup or check fold
+            - Hand.trip: ~trip
+            - Board. pair: ~board pair
+            - ~two pairs
+            - ~top pair big kicker
+            - ~top pair good kicker
+            - ~big second pair
+            - ~nothing or drawing
+
+    - Hole Cards. JT:
+        use: *MadeHands
+        rules:
+            - Board. set: check fold
+            - Hand. set: ~check raise if safe otherwise bet
+            - Hand. trip: ~trip
+            - Board. pair: ~board pair
+            - ~two pairs,
+            - ~top pair good kicker,
+            - ~medium second pair,
+            - ~nothing or drawing
+
+    - Hole Cards. suited connectors:
+        use: *MadeHands
+        rules:
+            - Board. set: check fold
+            - Hand. trip: ~trip
+            - Board. pair: ~board pair
+            - ~two pairs
+            - ~top pair good kicker
+            - ~medium second pair
             - ~nothing or drawing
 
 with:
@@ -244,3 +279,16 @@ with:
         - Hand. flush draw & straight draw: ~check raise
         - Hand. flush draw: bet until raise, call any
         - Hand. two way straight draw: bet until raise, call any
+
+    bluff if headup or check fold:
+        - Board. set:
+            - Player. 2: ~bluff check raise
+
+    two pairs:
+        - Hand. 2 pairs: bet
+
+    medium second pair:
+        - Hand. second pair:
+            - Hand. flush draw | Board. not suited: call any
+            - Hand. two way straight draw | Board. not suited: call any
+            - Preflop Betting. autoplayer lead | Player. <= 3: bet first

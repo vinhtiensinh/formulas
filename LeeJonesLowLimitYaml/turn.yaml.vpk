@@ -1,0 +1,93 @@
+template:
+    pair: &pair
+        - Hand. straight flush:   ~start betting or check raise
+        - Hand. quad:             ~start betting or check raise
+        - Hand. fullhouse:        ~start betting or check raise
+        - Hand. set:              ~play fast if safe ortherwise draw fullhouse
+        - Board. 1 card flush:    ~only play nut flush
+        - Board. 1 card straight: ~only play nut straight
+        - Board. 2 pairs:         check fold
+        - Hand. over pair:        <not defined>
+        - Board. 1 over card:     <not defined>
+        - all else:               check fold
+            
+rules:
+    - Hole Cards. AA:
+        use: *pair
+        with:
+            Hand. pair: ~big over pair
+
+    - Hole Cards. KK:
+        use: *pair
+        with:
+            Board. 1 card flush:  ~play nut flush bet first or slow down
+            Hand. pair:           ~big over pair
+            Board. 1 over card:    ~big pair 1 over card
+
+    - Hole Cards. QQ:
+        use: *pair
+        with:
+            Board. 1 card flush: ~play nut flush or call bet <= 3 players
+            Hand. over pair:     ~big over pair
+            Board. 1 over card:   ~big pair 1 over card
+
+    - Hole Cards. JJ:
+        use: *pair
+        with:
+            Board. 1 card flush: ~play nut flush or call bet <= 2 players
+            Board. 1 over card:   ~big pair 1 over card
+    
+    - Hole Cards. pair:
+        use: *pair
+        with:
+            Board. 1 card flush: check fold
+            Hand. pair: ~big over pair
+            Board. 1 over card: ~big pair 1 over card
+
+with:
+    start betting or check raise:
+        - Flop Betting. autoplayer lead; nobet: bet
+        - check raise
+
+    play fast if safe ortherwise draw fullhouse:
+        - Board. 1 card straight; 1 card flush:            call bet and raise
+        - Board. no possible straight & no possible flush: bet
+        - Board. possible flush:                           bet first, call any
+        - Board. possible straight:                        bet until raise, call any
+
+    only play nut flush:
+        - Hand. flush: ~nut flush
+
+    play nut flush bet first or slow down:
+        - Hand. flush: ~nut flush, call bet or open
+    
+    nut flush:
+        - Hand. nut flush: ~start betting or check raise
+
+    only play nut straight:
+        - Hand. straight: ~nut straight
+
+    nut straight:
+        - Board. 3 cards suited: bet first, call bet and raise
+        - Board. pair: bet until raise, call reraise behind
+        - bet
+
+    big over pair:
+        - Hand. flush draw; straight draw: bet first, call any
+        - Board. pair: bet first, call bet
+        - bet until raise
+
+    # - hang on if there is back end draw otherwise
+    # - only hang on if players <= 3
+    big pair 1 over card:
+        - Hand. nut flush draw; straight draw: call any
+        - Board. pair: check fold
+        - Player. <= 3: call bet
+
+    play nut flush or call bet <= 3 players:
+        - Hand. nut flush: ~nut flush
+        - Hand. flush | Player. <= 3: call bet
+
+    play nut flush or call bet <= 2 players:
+        - Hand. nut flush: ~nut flush
+        - Hand. flush | Player. <= 2: call bet
