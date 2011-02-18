@@ -3,7 +3,7 @@ template:
         - Hand. straight flush:   bet
         - Hand. quad:             bet
         - Hand. fullhouse:        bet
-        - Board. 1 card flush:    ~play flush only
+        - Board. 1 card flush:    ~play big flush only
         - Hand. flush:            bet
         - Board. straight:        call bet
         - Board. 1 card straight: ~play straight ortherwise call bet
@@ -36,10 +36,10 @@ with:
     set:
         - Board. no possible straight & no possible flush:
             - Hand. top set: bet
-            - bet until reraise
+            - bet until reraise, call any
         - bet until raise
 
-    play flush only:
+    play big flush only:
         - Hand. nut flush: bet
         - Hand. flush >= Q: call bet
 

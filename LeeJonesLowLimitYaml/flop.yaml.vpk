@@ -8,11 +8,11 @@ template:
     pair: &Pair
         use: *MadeHands
         rules:
-            - Hand. set:         ~check raise if safe otherwise bet
-            - Board. pair:       ~pair on board with pocket pair
-            - Hand. over pair:   bet
-            - Hand. 1 over card: ~pocket pair with one over card
-            - all else:          ~pocket pair
+            - Hand. set:          ~check raise if safe otherwise bet
+            - Board. pair:        ~pair on board with pocket pair
+            - Hand. over pair:    bet
+            - Board. 1 over card: ~pocket pair with one over card
+            - all else:           ~pocket pair
 
     normal: &Normal
         use: *MadeHands
@@ -40,7 +40,9 @@ rules:
     - Hole Cards. AA:
         use: *Pair
         with:
-            Hand. over pair: ~check raise if safe otherwise bet
+            Hand. over pair:
+                - Board. different cards >= 9: bet until raise
+                - ~check raise if safe otherwise bet
 
     - Hole Cards. KK:
         use: *Pair
@@ -94,8 +96,8 @@ rules:
 with:
     pair on board with pocket pair:
         - Player. >= 5: bet first
-        - Board. pair >= 5 & pair <= 9:
-            - Player. <= 4: bet until raise, call any    
+        - Board. pair <= 9:
+            - Player. <= 3: bet until raise, call any    
             - bet first, call bet
         - Hand. over pair: bet first, call bet
         - Board. over pair: check fold
@@ -214,3 +216,7 @@ with:
         - Hand. flush draw | Board. not suited: call any
         - Hand. two way straight draw | Board. not suited: call any
         - Preflop Betting. autoplayer lead | Player. <= 3: bet first
+
+    straight:
+        - Board. flush draw; possible flush: bet
+        - ~check raise

@@ -4,8 +4,8 @@ template:
         - Hand. quad:             ~start betting or check raise
         - Hand. fullhouse:        ~start betting or check raise
         - Hand. set:              ~play fast if safe ortherwise draw fullhouse
-        - Board. 1 card flush:    ~only play nut flush
-        - Board. 1 card straight: ~only play nut straight
+        - Board. 1 card flush:    ~only play big flush
+        - Board. 1 card straight: ~play good straight; call bet and raise with bottom straight
         - Board. 2 pairs:         check fold
         - Hand. over pair:        <not defined>
         - Board. 1 over card:     <not defined>
@@ -15,7 +15,9 @@ rules:
     - Hole Cards. AA:
         use: *pair
         with:
-            Hand. pair: ~big over pair
+            Board. 2 pairs:
+                - Board.2 pairs <= 5: bet first, call bet
+            Hand. over pair: ~big over pair
 
     - Hole Cards. KK:
         use: *pair
@@ -55,19 +57,21 @@ with:
         - Board. possible flush:                           bet first, call any
         - Board. possible straight:                        bet until raise, call any
 
-    only play nut flush:
-        - Hand. flush: ~nut flush
+    only play big flush:
+        - Hand. nut flush: ~nut flush
+        - Hand. flush >= Q: call bet
 
     play nut flush bet first or slow down:
         - Hand. flush: ~nut flush, call bet or open
     
     nut flush:
-        - Hand. nut flush: ~start betting or check raise
+        - ~start betting or check raise
 
-    only play nut straight:
-        - Hand. straight: ~nut straight
+    play good straight; call bet and raise with bottom straight:
+        - Hand. bottom straight: call bet and raise
+        - Hand. straight: ~straight
 
-    nut straight:
+    straight:
         - Board. 3 cards suited: bet first, call bet and raise
         - Board. pair: bet until raise, call reraise behind
         - bet
