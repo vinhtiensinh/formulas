@@ -38,9 +38,11 @@ template:
 
 rules:
     - Hole Cards. AA:
-        use: *Pair
-        with:
-            Hand. over pair:
+        use: *MadeHands
+        rules:
+            - Hand. set:          ~check raise if safe otherwise bet
+            - Board. pair:        ~pair on board with pocket pair
+            - Hand. over pair:
                 - Board. different cards >= 9: bet until raise
                 - ~check raise if safe otherwise bet
 
@@ -48,7 +50,7 @@ rules:
         use: *Pair
         with:
             Hand. over pair: ~check raise if safe otherwise bet
-            Hand. 1 over card: ~big pocket pair with one over card
+            Board. 1 over card: ~big pocket pair with one over card
 
     - Hole Cards. pair:
         use: *Pair
@@ -213,7 +215,7 @@ with:
         - Hand. 2 pairs: bet first, call bet, call raise behind
 
     medium second pair:
-        - Hand. flush draw | Board. not suited: call any
+        - Hand. flush draw Board. not suited: call any
         - Hand. two way straight draw | Board. not suited: call any
         - Preflop Betting. autoplayer lead | Player. <= 3: bet first
 

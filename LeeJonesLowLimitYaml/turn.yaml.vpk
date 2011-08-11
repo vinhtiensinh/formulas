@@ -1,23 +1,32 @@
 template:
-    pair: &pair
+    made hand: & MadeHand
         - Hand. straight flush:   ~start betting or check raise
         - Hand. quad:             ~start betting or check raise
         - Hand. fullhouse:        ~start betting or check raise
-        - Hand. set:              ~play fast if safe ortherwise draw fullhouse
-        - Board. 1 card flush:    ~only play big flush
-        - Board. 1 card straight: ~play good straight; call bet and raise with bottom straight
-        - Board. 2 pairs:         check fold
-        - Hand. over pair:        <not defined>
-        - Board. 1 over card:     <not defined>
-        - all else:               check fold
+
+    pair: &pair
+        use: *MadeHand
+        rules:
+            - Hand. set:              ~play fast if safe ortherwise draw fullhouse
+            - Board. 1 card flush:    ~only play big flush
+            - Board. 1 card straight: ~play good straight; call bet and raise with bottom straight
+            - Board. 2 pairs:         check fold
+            - Hand. over pair:        <not defined>
+            - Board. 1 over card:     <not defined>
+            - all else:               check fold
             
 rules:
     - Hole Cards. AA:
-        use: *pair
-        with:
-            Board. 2 pairs:
+        use: *MadeHand 
+        rules:
+            - Hand. set: ~play fast if safe ortherwise draw fullhouse
+            - Board. 1 card flush:
+                - Hand. flush: ~start betting or check raise
+                - Player. 2: call bet
+            - Board. 1 card straight: ~play good straight; call bet and raise with bottom straight
+            - Board. 2 pairs:
                 - Board.2 pairs <= 5: bet first, call bet
-            Hand. over pair: ~big over pair
+            - Hand. over pair: ~big over pair
 
     - Hole Cards. KK:
         use: *pair
@@ -68,8 +77,9 @@ with:
         - ~start betting or check raise
 
     play good straight; call bet and raise with bottom straight:
-        - Hand. bottom straight: call bet and raise
-        - Hand. straight: ~straight
+        - Hand. straight:
+            - Hand. bottom straight: call bet and raise
+            - Hand. straight: ~straight
 
     straight:
         - Board. 3 cards suited: bet first, call bet and raise
